@@ -1,0 +1,22 @@
+#登录授权参数
+github:
+  client:
+    id: dfa64597af0e903657c8
+    secret: 5a437a7b4f300fa4f07b71a5e0cc021180f48377
+  redirect:
+    uri: http://localhost:8080/callback
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/community?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource:
+##    url: jdbc:h2:tcp://127.0.0.1:9092/~/h2/community;MVCC=TRUE
+#    url: jdbc:h2:~/h2/community;
+#    username: root
+#    password: 123456
+#    driver-class-name: org.h2.Driver
+#关闭thymeleaf的缓存
+  thymeleaf:
+    cache: false
