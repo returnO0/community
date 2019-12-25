@@ -20,9 +20,11 @@ import java.util.Date;
  */
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> {
-    @Autowired
-    private UserMapper userMapper;
-
+    /**
+     * 将用户对象插入到数据库
+     * @param entity 用户信息
+     * @return 返回插入是否成功
+     */
     @Override
     public boolean insert(User entity) {
         Date now = new Date();
@@ -31,9 +33,27 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         return super.insert(entity);
     }
 
+    /**
+     * 判断用户是否存在
+     * @param gitHubUser github用户
+     * @return  为空为false 不为空为true
+     */
     public boolean isExist(GitHubUser gitHubUser) {
         Wrapper<User> wrapper=new EntityWrapper<User>().eq("account_id",gitHubUser.getId());
         User user = selectOne(wrapper);
         return !StringUtils.isEmpty(user);
     }
+
+    /**
+     * 根据AccountId更新用户信息
+     * @param user 用户对象
+     * @return  是否更新成功
+     */
+    public Boolean updateByAccountId(User user) {
+        Wrapper<User> wrapper=new EntityWrapper<User>().eq("account_id",user.getAccountId());
+        user.setUpdateTime(new Date());
+        return update(user, wrapper);
+    }
+
+
 }

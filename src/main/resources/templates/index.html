@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>码匠社区</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <script src="js/js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
+    <!--头部导航-->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">码匠社区</span>
                 </button>
-                <a class="navbar-brand" href="#">码匠社区</a>
+                <a class="navbar-brand" href="/">码匠社区</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -26,9 +28,12 @@
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
+                    <li th:if="${session.user !=null}">
+                        <a href="/publish">发布</a>
+                    </li>
                     <li th:if="${session.user ==null}"><a href="https://github.com/login/oauth/authorize?client_id=dfa64597af0e903657c8&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
                     <li class="dropdown" th:if="${session.user !=null}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}">我<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.name}">我<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">消息中心</a></li>
                             <li><a href="#">个人资料</a></li>
@@ -40,5 +45,41 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <!--问题主体-->
+    <div class="container-fluid main">
+        <div class="row">
+            <!--左侧显示-->
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发起</h2>
+                <hr>
+                <div class="media" th:each="question:${questions}">
+                    <div class="media-left">
+                        <a href="#">
+                            <!--th:src="${question.user.imgUrl}"-->
+                            <img class="media-object img-rounded" th:src="${question.user.imgUrl}"  src="#" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" th:text="${question.title}">怎么快速学会SpringBoot开发</h4>
+                        <span  th:text="${question.description}"></span><br>
+                        <span class="text-desc" th:text="${question.commentCount}">2个回复</span>
+                        <span class="text-desc" th:text="${question.viewConut}">31次浏览</span>
+                        <span class="text-desc" th:text="${#dates.format(question.createTime,'yyyy-MM-dd HH:mm')}">1小时前</span>
+                    </div>
+                </div>
+            </div>
+            <!--右侧推荐-->
+            <div class="col-lg-3 col-md-12 col-xs-12">
+                <h3>热门问题</h3>
+                <p>
+                    · 问题标题:请用精简的语言描述你发布的问题,不超过12字
+                    <br>
+                    · 问题补充:详细补充您的问题内容,并却道问题描述清晰直观,并提供一些相关的资料
+                    <br>
+                    · 选择标签:选择一个或者多个合适的标签,用空格隔开,每个标签不超过10个字
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

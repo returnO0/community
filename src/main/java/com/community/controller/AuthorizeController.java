@@ -24,8 +24,9 @@ import java.util.UUID;
 public class AuthorizeController {
     private final GithubProvider githubProvider;
     @Autowired
-    public AuthorizeController(GithubProvider githubProvider) {
+    public AuthorizeController(GithubProvider githubProvider, UserService userService) {
         this.githubProvider = githubProvider;
+        this.userService = userService;
     }
     @Value("${github.client.id}")
     private String clientId;
@@ -33,8 +34,7 @@ public class AuthorizeController {
     private String secret;
     @Value("${github.redirect.uri}")
     private String redirectUri;
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
     /**
      * github会自动调用callback请求完成授权登录
      * @param code  code码 登录授权后github会发送
@@ -45,24 +45,35 @@ public class AuthorizeController {
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            HttpServletRequest request){
+        //将GitHub返回的code的state 以及自己的clientId secret redirectUri 存入到对象
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(secret);
         accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
+        //将数据发送给github并拿到返回的token值
         String token = githubProvider.getAccessToken(accessTokenDTO);
+        //将token值发给GitHub得到用户信息
         GitHubUser gitHubUser = githubProvider.getUser(token);
-        if(!StringUtils.isEmpty(gitHubUser)&&!userService.isExist(gitHubUser)){
+        if(!StringUtils.isEmpty(gitHubUser)){
+            //将GitHub用户信息存入到user对象中
             User user=new User();
             user.setToken(UUID.randomUUID().toString());
             user.setName(gitHubUser.getName());
             user.setAccountId(gitHubUser.getId());
-            userService.insert(user);
-            request.getSession().setAttribute("user",gitHubUser);
+            user.setBio(gitHubUser.getBio());
+            user.setImgUrl(gitHubUser.getAvatar_url());
+            //根据accountId判断用户是否存在,如果存在则更新用户信息
+            if (!userService.isExist(gitHubUser)){
+                userService.insert(user);
+            }else {
+                userService.updateByAccountId(user);
+            }
+            request.getSession().setAttribute("user",user);
             return "redirect:/";
         }else{
-            request.getSession().setAttribute("user",gitHubUser);
+            //登录失败
             return "redirect:/";
         }
     }

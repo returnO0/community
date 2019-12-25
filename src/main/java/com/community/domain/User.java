@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User{
+public class User extends Domain{
     @TableField(value = "account_id")
     private Long accountId;
 
@@ -24,10 +24,10 @@ public class User{
 
     @TableField(value = "name")
     private String name;
-    
-    @TableField(value = "create_time")
-    private Object createTime;
-    
-    @TableField(value = "update_time")
-    private Object updateTime;
+
+    @TableField(value = "bio")
+    private String bio;
+
+    @TableField(value = "img_url")
+    private String imgUrl;
 }
