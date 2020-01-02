@@ -26,7 +26,9 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading" th:text="${question.title}">怎么快速学会SpringBoot开发</h4>
+                        <h4 class="media-heading">
+                            <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}">标题</a>
+                        </h4>
                         <span  th:text="${question.description}"></span><br>
                         <span class="text-desc" th:text="${question.commentCount}">2个回复</span>
                         <span class="text-desc" th:text="${question.viewConut}">31次浏览</span>

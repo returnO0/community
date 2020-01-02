@@ -77,4 +77,10 @@ public class AuthorizeController {
             return "redirect:/";
         }
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:/";
+    }
 }
