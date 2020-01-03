@@ -24,8 +24,14 @@ import java.util.List;
  */
 @Service
 public class QuestionService extends ServiceImpl<QuestionMapper,Question> {
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+    private final QuestionMapper questionMapper;
+    @Autowired(required = false)
+    public QuestionService(UserService userService, QuestionMapper questionMapper) {
+        this.userService = userService;
+        this.questionMapper = questionMapper;
+    }
+
 
     /**
      * 查询全部问题 并封装成QuestionDTO
@@ -62,7 +68,7 @@ public class QuestionService extends ServiceImpl<QuestionMapper,Question> {
     @Override
     public boolean insertOrUpdate(Question entity) {
 
-        boolean flag=false;
+        boolean flag;
         Date now=new Date();
         if(StringUtils.isEmpty(entity.getId())){
             entity.setCreateTime(now);
@@ -73,5 +79,21 @@ public class QuestionService extends ServiceImpl<QuestionMapper,Question> {
             flag=updateById(entity);
         }
         return flag;
+    }
+
+    /**
+     * 阅读数+1
+     * @param id 问题id
+     */
+    public void incView(Long id) {
+        questionMapper.incViewCount(id);
+    }
+
+    /**
+     * 增加评论数
+     * @param id 主键
+     */
+    public void incComment(Long id){
+        questionMapper.incCommentCount(id);
     }
 }

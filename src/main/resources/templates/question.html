@@ -21,7 +21,7 @@
             <span class="text-desc">
                 作者:<span th:text="${question.user.name}">2个回复</span> |
                 发布时间<span th:text="${#dates.format(question.createTime,'yyyy-MM-dd HH:mm')}">1小时前</span> |
-                阅读数<span th:text="${question.viewConut}">31次浏览</span>
+                阅读数<span th:text="${question.viewCount}">31次浏览</span>
             </span>
             <hr class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12" th:text="${question.description}"></div>

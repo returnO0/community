@@ -16,7 +16,7 @@ public class QuestionDTO {
     private Long creator;
     private String tag;
     private Integer commentCount;
-    private Integer viewConut;
+    private Integer viewCount;
     private Integer likeCount;
     private Object createTime;
     private Object updateTime;

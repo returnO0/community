@@ -1,9 +1,6 @@
 package com.community.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 /**
@@ -11,10 +8,10 @@ import com.baomidou.mybatisplus.annotations.TableName;
  * @author zhaowei.zhang01@hand-china.com
  * @date 2019-12-24 14:29:28
  */
- 
+
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "question")
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question extends Domain {
@@ -29,9 +26,9 @@ public class Question extends Domain {
     
     @TableField(value = "comment_count")
     private Integer commentCount;
-    
-    @TableField(value = "view_conut")
-    private Integer viewConut;
+
+    @TableField(value = "view_count")
+    private Integer viewCount;
     
     @TableField(value = "like_count")
     private Integer likeCount;

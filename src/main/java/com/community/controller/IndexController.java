@@ -20,8 +20,12 @@ import java.util.List;
  **/
 @Controller
 public class IndexController {
+    private final QuestionService questionService;
+
     @Autowired
-    private QuestionService questionService;
+    public IndexController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/")
     public String index(

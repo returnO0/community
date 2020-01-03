@@ -2,6 +2,7 @@ package com.community.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
  * @date 2019-12-20 10:52:13
  */
  
+@EqualsAndHashCode(callSuper = true)
 @TableName(value = "user")
 @Data
 @NoArgsConstructor

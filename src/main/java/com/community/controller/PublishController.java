@@ -21,10 +21,13 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Controller
 public class PublishController {
+    private final QuestionService questionService;
+
     @Autowired
-    private QuestionService questionService;
-    @Autowired
-    private UserService userService;
+    public PublishController(QuestionService questionService, UserService userService) {
+        this.questionService = questionService;
+    }
+
     @GetMapping("/publish")
     public String publish(){
         return "publish";

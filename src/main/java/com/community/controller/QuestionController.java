@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
  **/
 @Controller
 public class QuestionController {
+    private final QuestionService questionService;
     @Autowired
-    private QuestionService questionService;
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id")Long id,
@@ -29,6 +32,8 @@ public class QuestionController {
         if(StringUtils.isEmpty(question)){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
+        //累加阅读数
+        questionService.incView(id);
         //将question对象转换为前端需要的DTO对象并存在Model中
         model.addAttribute("question",questionService.toQuestionDTO(question));
         return "question";
