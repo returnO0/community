@@ -12,7 +12,7 @@ public class ResultDTO {
     private Integer code;
     private String message;
 
-    public static ResultDTO messageOf(Integer code,String message){
+    private static ResultDTO messageOf(Integer code,String message){
         ResultDTO resultDTO=new ResultDTO();
         resultDTO.setCode(code);
         resultDTO.setMessage(message);
@@ -26,5 +26,4 @@ public class ResultDTO {
     public static ResultDTO okOf(){
         return messageOf(200,"请求成功");
     }
-
 }

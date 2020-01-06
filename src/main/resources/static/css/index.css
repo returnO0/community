@@ -14,3 +14,30 @@ body{
     font-weight: normal;
     color: #999;
 }
+
+.comment{
+    margin: 10px 0;
+}
+
+.btn-right {
+    float: right;
+    margin-bottom: 20px;
+}
+.margin-top0{
+    margin-top: 0;
+}
+.padding-left0{
+    padding-left: 0;
+}
+.menu{
+    margin-top: 10px;
+    color: #999;
+}
+.menu .icon{
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu .icon:hover{
+    color: #499ef3;
+}

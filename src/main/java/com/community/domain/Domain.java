@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
+import java.util.Date;
 
 /**
  * @author zhiqiang.hu01@hand-china.com
@@ -15,7 +16,7 @@ public class Domain {
     @TableId(type = IdType.AUTO)
     protected Long id;
     @TableField(value = "create_time")
-    protected Object createTime;
+    protected Date createTime;
     @TableField(value = "update_time")
-    protected Object updateTime;
+    protected Date updateTime;
 }

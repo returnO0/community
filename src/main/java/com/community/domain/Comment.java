@@ -34,8 +34,8 @@ public class Comment extends Domain {
     */
     @TableField(value = "commentator")
     private Long commentator;
-    
-    /**
+
+     /**
       点赞数量 
     */
     @TableField(value = "like_count")
