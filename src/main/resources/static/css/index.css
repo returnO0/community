@@ -26,6 +26,9 @@ body{
 .margin-top0{
     margin-top: 0;
 }
+.margin-bottom4{
+    margin-bottom: 20px;
+}
 .padding-left0{
     padding-left: 0;
 }
@@ -38,6 +41,21 @@ body{
     font-size: 15px;
     cursor: pointer;
 }
-.menu .icon:hover{
+.menu .icon:hover {
     color: #499ef3;
+}
+.menu .active{
+    color: #499ef3;
+}
+.border-bottom{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+.sub-comments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
 }

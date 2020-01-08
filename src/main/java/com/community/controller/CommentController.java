@@ -2,7 +2,9 @@ package com.community.controller;
 
 import com.community.domain.Comment;
 import com.community.domain.User;
+import com.community.dto.CommentDTO;
 import com.community.dto.ResultDTO;
+import com.community.enums.CommentType;
 import com.community.exception.CustomizeErrorCode;
 import com.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 /**
  * (Comment)表控制层
  *
@@ -40,5 +44,12 @@ public class CommentController {
         }else {
             return ResultDTO.messageOf(CustomizeErrorCode.NO_LOGIN);
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comment(@PathVariable(name = "id")Long id){
+        List<CommentDTO> comments=commentService.selectListById(id, CommentType.COMMENT);
+        return ResultDTO.okOf(comments);
     }
 }

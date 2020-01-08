@@ -41,6 +41,10 @@ public enum CommentType implements IEnum {
         return this.type;
     }
 
+    public Integer getType() {
+        return this.type;
+    }
+
     /**
      * 根据id 返回枚举
      * @param id 类型id

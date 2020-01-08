@@ -42,28 +42,54 @@
                 </h4>
                 <hr class="col-lg-12 col-md-12 col-xs-12 margin-top0">
                 <br>
-                <div class="media col-lg-12 col-md-12 col-xs-12 padding-left0">
+                <div class="media col-lg-12 col-md-12 col-xs-12 padding-left0 border-bottom" th:each="comment:${comments}">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-rounded" th:src="${question.user.imgUrl}"  src="#" alt="头像">
+                            <img class="media-object img-rounded" th:src="${comment.user.imgUrl}"  src="#" alt="头像">
                         </a>
                     </div>
                     <div class="media-body media-middle">
-                        <h5 class="media-heading" th:text="${question.user.name}">
+                        <h5 class="media-heading" th:text="${comment.user.name}">
                             名字
                         </h5>
-                        <div>我是回复类容</div>
+                        <!--评论类容-->
+                        <div th:text="${comment.content}">我是回复类容</div>
+                        <!--底部点赞回复按钮-->
                         <div class="menu">
                             <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                            <span class="glyphicon glyphicon-comment icon"></span>
-                            <span class="pull-right" th:text="${#dates.format(question.createTime,'yyyy-MM-dd HH:mm')}">1小时前</span>
+                            <span th:text="${comment.likeCount}">10</span>
+                            <span class="glyphicon glyphicon-comment icon"  data-toggle="collapse" th:data-target="'#'+${comment.id}" aria-expanded="false"  th:aria-controls="${comment.id}" onclick="collapseComments(this)"></span>
+                            <span class="pull-right" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">1小时前</span>
+                        </div>
+                        <!--二级评论框-->
+                        <div class="col-lg-12 col-md-12 col-xs-12 collapse sub-comments" th:id="${comment.id}">
+                            <div class="media  padding-left0 border-bottom" th:each="comment:${comments}">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object img-rounded" th:src="${comment.user.imgUrl}"  src="#" alt="头像">
+                                    </a>
+                                </div>
+                                <div class="media-body media-middle">
+                                    <h5 class="media-heading" th:text="${comment.user.name}">
+                                        名字
+                                    </h5>
+                                    <!--评论类容-->
+                                    <div th:text="${comment.content}">我是回复类容</div>
+                                    <!--底部点赞回复按钮-->
+                                    <div class="menu">
+                                        <span class="pull-right" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">1小时前</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control margin-bottom4" id="comment" placeholder="评论一下......"/>
+                            <button type="button" class="btn btn-success btn-right" th:data="${comment.id}" onclick="insertComment(this)">评论</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!--回复输入框-->
-            <hr class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>提交评论</h4>
                 <div class="media">
                     <div class="media-left">
                         <a href="#">

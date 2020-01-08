@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.community.persistence.CommentMapper">
-
+    <resultMap id="commentDTO" type="com.community.dto.CommentDTO">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="commentator" column="commentator"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="createTime" column="create_time"/>
+        <association property="user" javaType="com.community.domain.User">
+            <id property="id" column="id"/>
+            <result property="accountId" column="account_id"/>
+            <result property="name" column="name"/>
+            <result property="bio" column="bio"/>
+            <result property="imgUrl" column="img_url"/>
+        </association>
+    </resultMap>
+    <parameterMap id="commentMap" type="java.util.Map">
+        <parameter property="id" javaType="java.lang.Long" jdbcType="INTEGER" />
+        <parameter property="commentType" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </parameterMap>
+    <select id="selectCommentById"  parameterMap="commentMap" resultMap="commentDTO">
+        select c.id, parent_id, type, commentator, like_count, c.CREATE_TIME,content, account_id, name, bio, img_url
+        from comment c,community.user u
+        where commentator=account_id and type=#{commentType} and parent_id=#{id}
+        order by c.create_time desc
+    </select>
 </mapper>

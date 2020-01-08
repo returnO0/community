@@ -1,7 +1,7 @@
 package com.community.controller;
 
 import com.community.domain.Question;
-import com.community.dto.CommentDTO;
+import com.community.enums.CommentType;
 import com.community.exception.CustomizeErrorCode;
 import com.community.exception.CustomizeException;
 import com.community.service.CommentService;
@@ -12,9 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
-
 /**
  * @author zhiqiang.hu01@hand-china.com
  * @version 1.0
@@ -40,8 +37,9 @@ public class QuestionController {
         }
         //累加阅读数
         questionService.incView(id);
-        List<CommentDTO> comments=commentService.selectListByQuestionId(id);
+        //讲commentDTO集合对象存入model中
         //将question对象转换为前端需要的DTO对象并存在Model中
+        model.addAttribute("comments",commentService.selectListById(id,CommentType.QUESTION));
         model.addAttribute("question",questionService.toQuestionDTO(question));
         return "question";
     }

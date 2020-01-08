@@ -25,10 +25,12 @@ import java.util.List;
 @Service
 public class CommentService extends ServiceImpl<CommentMapper,Comment> {
     private final QuestionService questionService;
+    private final CommentMapper commentMapper;
 
-    @Autowired
-    public CommentService(QuestionService questionService) {
+    @Autowired(required = false)
+    public CommentService(QuestionService questionService, CommentMapper commentMapper) {
         this.questionService = questionService;
+        this.commentMapper = commentMapper;
     }
 
     /**
@@ -68,6 +70,9 @@ public class CommentService extends ServiceImpl<CommentMapper,Comment> {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             flag=insert(comment,user);
+        }else if (StringUtils.isEmpty(comment.getContent())){
+            //回复类容为空
+            throw new CustomizeException(CustomizeErrorCode.CONTENT_IS_EMPTY);
         }else {
             //回复问题
             //问题不存在
@@ -84,7 +89,13 @@ public class CommentService extends ServiceImpl<CommentMapper,Comment> {
         }
     }
 
-    public List<CommentDTO> selectListByQuestionId(Long id) {
-        return null;
+    /**
+     *
+     * @param id 问题id或一级评论
+     * @param commentType 评论类型(一级评论，二级评论)
+     * @return 问题对应一级评论的DTO集合
+     */
+    public List<CommentDTO> selectListById(Long id, CommentType commentType) {
+        return commentMapper.selectCommentById(id,commentType.getType());
     }
 }
